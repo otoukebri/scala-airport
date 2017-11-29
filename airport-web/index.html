@@ -5,20 +5,84 @@
 </head>
 <body>
 	<h1><center>Airport application</center></h1>
-	<div id="highest"></div>
+	<div><h2>Country airport runways</h2>
+	 <input id="country" type="text" name="country" placeholder="Please enter country  name or code"> <button id= "find"type="button">Search</button>
+
+
+	 <div id="search"></div>
+	</div>	
+	<div><h2>Highest Number airports</h2><div id="highest"></div></div>
+	<div><h2>Lowest Number airports</h2><div id="lowest"></div></div>
+
+
+
 <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>	
+  src="assets/jquery-3.2.1.min.js"></script>	
 <script type="text/javascript">
 	var domain = "http://localhost:9000";
 	$(function(){
-		$.get(domain+"/report/aiports/number/highest", function(){
-			 $.each(v, function (idx, val) {
-      				console.log(idx);
-      			console.log(val);
-   		 });
-		})
+
+		$.ajax({
+			type: "GET",
+			url: domain+"/report/aiports/number/highest",
+			dataType: "json",
+			success: function(json) {
+
+				var highest = "<table><tr><td><b>Country name</b></td><td><b>Count</b></td></tr>";
+				$.each(json, function (idx, val) {
+					highest += "<tr>"; 
+				    highest += "<td>" + val.country.name + "</td>";
+				    highest += "<td>" + val.count + "</td>";
+					highest += "</tr>"; 
+				});	
+				highest + "</table>";
+				$("#highest").html(highest);
+			}
+		})		
+
+		$.ajax({
+			type: "GET",
+			url: domain+"/report/aiports/number/lowest",
+			dataType: "json",
+			success: function(json) {
+
+				var lowest = "<table><tr><td><b>Country name</b></td><td><b>Count</b></td></tr>";
+				$.each(json, function (idx, val) {
+					lowest += "<tr>"; 
+				    lowest += "<td>" + val.country.name + "</td>";
+				    lowest += "<td>" + val.count + "</td>";
+					lowest += "</tr>"; 
+				});	
+				lowest + "</table>";
+				$("#lowest").html(lowest);
+			}
+		})	
+
+
+		$('#find').click(function() {
+				$.ajax({
+						type: "GET",
+						url: domain+"/search/"+$(country).val(),
+						dataType: "json",
+						success: function(json) {
+							var search = "<table>";
+							$.each(json, function (idx, val) {
+								var runways = "";
+								for (var i = val.runways.length - 1; i >= 0; i--) {
+									runways +=  ", " + val.runways[i].id 
+
+								}
+								search += "<tr>"; 
+				   				search += "<td>" + val.airport.name + "</td>";
+				   				search += "<td>" + runways + "</td>";
+								search += "</tr>"; 
+							})
+							search += "</table>";
+							$("#search").html(search);
+						}
+					})				
+
+		});
 
 	})
 </script>
