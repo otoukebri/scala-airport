@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h1><center>Airport application</center></h1>
+	<div id="highest"></div>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>	
+<script type="text/javascript">
+	var domain = "http://localhost:9000";
+	$(function(){
+		$.get(domain+"/report/aiports/number/highest", function(){
+			 $.each(v, function (idx, val) {
+      				console.log(idx);
+      			console.log(val);
+   		 });
+		})
+
+	})
+</script>
+</body>
+</html>
