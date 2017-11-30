@@ -5,16 +5,15 @@ import org.scalatest.WordSpecLike
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import tn.os.projects.business.QueryBusiness
 import javax.inject.Inject
-import tn.os.projects.dao.RunwayDaoStub
-import tn.os.projects.dao.AirportDaoStub
-import tn.os.projects.dao.CountryDaoStub
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import tn.os.projects.business.ReportBusiness
+import tn.os.projects.dao.CountryDaoImpl
+import tn.os.projects.dao.AirportDaoImpl
 
 class ReportBusinessSpec extends WordSpecLike with Matchers {
 
-  val reportBusiness = new ReportBusiness(new CountryDaoStub, new AirportDaoStub)
+  val reportBusiness = new ReportBusiness(new CountryDaoImpl, new AirportDaoImpl)
   "Report Business Test" should {
     "get Countries with High Airports Number" in {
       val reportResponse = Await.result(reportBusiness.getCountriesWithHighAirportsNumber, 15 seconds)

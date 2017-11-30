@@ -8,8 +8,9 @@ import tn.os.projects.business.utils.CsvReader
 import tn.os.projects.model.Airport
 import tn.os.projects.model.Country
 
-class AirportDaoImpl extends AirportDao {
-  val fileName: String = "conf/csv/airports.csv"
-  override def airports: List[Airport] = new CsvReader(fileName)
+class AirportDaoImpl {
+  lazy val fileName: String = "conf/csv/airports.csv"
+
+  lazy val airports: List[Airport] = new CsvReader(fileName)
     .readAndParse((line, headers) => Airport(line, headers))
 }

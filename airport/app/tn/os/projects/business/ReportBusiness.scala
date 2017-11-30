@@ -9,10 +9,9 @@ import tn.os.projects.dao.CountryDaoImpl
 import tn.os.projects.model.AirportRunways
 import tn.os.projects.model.Country
 import tn.os.projects.model.CountryReport
-import tn.os.projects.dao.CountryDao
-import tn.os.projects.dao.AirportDao
 
-class ReportBusiness @Inject() (countryDao: CountryDao, airportDao: AirportDao)
+
+class ReportBusiness @Inject() (countryDao: CountryDaoImpl, airportDao: AirportDaoImpl)
 (implicit ec: ExecutionContext) {
 
   def getTopCountriesSortedWith(f: (CountryReport, CountryReport) => Boolean) =

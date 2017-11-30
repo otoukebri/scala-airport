@@ -9,11 +9,9 @@ import tn.os.projects.dao.CountryDaoImpl
 import tn.os.projects.dao.RunwayDaoImpl
 import tn.os.projects.model.AirportRunways
 import tn.os.projects.model.Country
-import tn.os.projects.dao.RunwayDao
-import tn.os.projects.dao.CountryDao
-import tn.os.projects.dao.AirportDao
 
-class QueryBusiness @Inject() (countryDao: CountryDao, airportDao: AirportDao, runwayDao: RunwayDao)(implicit ec: ExecutionContext) {
+
+class QueryBusiness @Inject() (countryDao: CountryDaoImpl, airportDao: AirportDaoImpl, runwayDao: RunwayDaoImpl)(implicit ec: ExecutionContext) {
 
   def search(pattern: String): Future[List[AirportRunways]] = {
     val r = countryDao.countries.find {
